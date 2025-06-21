@@ -4,7 +4,7 @@ import { USER_POSTS_PAGE } from "../routes.js";
 import { renderHeaderComponent } from "./header-component.js";
 import { posts, goToPage } from "../index.js";
 
-export function renderPostsPageComponent({ appEl, posts }) {
+export function renderPostsPageComponent({ appEl, user, posts, goToPage }) {
   // @TODO: реализовать рендер постов из api
   console.log("Актуальный список постов:", posts);
 
@@ -65,7 +65,8 @@ export function renderPostsPageComponent({ appEl, posts }) {
 
   renderHeaderComponent({
     element: document.querySelector(".header-container"),
-    user,goToPage,
+    user,
+    goToPage,
   });
 
   for (let userEl of document.querySelectorAll(".post-header")) {
