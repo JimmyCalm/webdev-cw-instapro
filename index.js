@@ -15,6 +15,7 @@ import {
   removeUserFromLocalStorage,
   saveUserToLocalStorage,
 } from "./helpers.js";
+import { error } from "console";
 
 export let user = getUserFromLocalStorage();
 export let page = null;
@@ -111,6 +112,34 @@ const renderApp = () => {
       appEl,
       onAddPostClick({ description, imageUrl }) {
         // @TODO: реализовать добавление поста в API
+        if (!description || !imageUrl) {
+          alert("Описание и изображение обязательны");
+          return;
+        }
+        
+        fetch("https://wedev-api.sky.pro/api/v1/prod/instapro", {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${user.toke}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            description,
+            imageUrl,
+          }),
+        })
+        .then((response) => {
+          if (response.status === 400) {
+            throw new Error("Неверные данные для поста");
+          }
+          return response.json();
+        })
+        .then(() => {
+          goToPage(POSTS_PAGE);
+        })
+        .catch((error) => {
+          alert(error.message);
+        });
         console.log("Добавляю пост...", { description, imageUrl });
         goToPage(POSTS_PAGE);
       },
