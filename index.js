@@ -120,6 +120,7 @@ const renderApp = () => {
   if (page === ADD_POSTS_PAGE) {
     return renderAddPostPageComponent({
       appEl,
+      user,
       onAddPostClick({ description, imageUrl }) {
         // @TODO: реализовать добавление поста в API (Готово)
         if (!description || !imageUrl) {
@@ -131,7 +132,6 @@ const renderApp = () => {
           method: "POST",
           headers: {
             Authorization: `Bearer ${user.token}`,
-            "Content-Type": "application/json",
           },
           body: JSON.stringify({
             description,

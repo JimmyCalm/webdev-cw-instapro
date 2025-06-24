@@ -1,7 +1,7 @@
 import { renderHeaderComponent } from "./header-component";
 import { renderUploadImageComponent } from "./upload-image-component";
 
-export function renderAddPostPageComponent({ appEl, onAddPostClick }) {
+export function renderAddPostPageComponent({ appEl,user, onAddPostClick }) {
   let imageUrl = "";
 
   const render = () => {
@@ -23,6 +23,7 @@ export function renderAddPostPageComponent({ appEl, onAddPostClick }) {
 
     renderHeaderComponent({
       element: document.querySelector(".header-container"),
+      user,
     });
 
     renderUploadImageComponent({
