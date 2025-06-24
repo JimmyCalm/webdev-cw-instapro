@@ -121,7 +121,7 @@ const renderApp = () => {
     return renderAddPostPageComponent({
       appEl,
       onAddPostClick({ description, imageUrl }) {
-        // @TODO: реализовать добавление поста в API
+        // @TODO: реализовать добавление поста в API (Готово)
         if (!description || !imageUrl) {
           alert("Описание и изображение обязательны");
           return;
@@ -145,12 +145,12 @@ const renderApp = () => {
             return response.json();
           })
           .then(() => {
+            console.log("Добавляю пост...", { description, imageUrl });
             goToPage(POSTS_PAGE);
           })
           .catch((error) => {
             alert(error.message);
           });
-        console.log("Добавляю пост...", { description, imageUrl });
       },
     });
   }
@@ -165,7 +165,7 @@ const renderApp = () => {
   }
 
   if (page === USER_POSTS_PAGE) {
-    // @TODO: реализовать страницу с фотографиями отдельного пользвателя
+    // @TODO: реализовать страницу с фотографиями отдельного пользвателя(Готово)
     return renderPostsPageComponent({
       appEl,
       user,

@@ -35,6 +35,7 @@ export function renderHeaderComponent({ element, user }) {
    * Если пользователь авторизован, перенаправляет на страницу добавления постов.
    * Если пользователь не авторизован, перенаправляет на страницу авторизации.
    */
+  
   element
     .querySelector(".add-or-login-button")
     .addEventListener("click", () => {

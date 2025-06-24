@@ -65,7 +65,7 @@ export function uploadImage({ file }) {
     body: data,
   }).then((response) => {
     return response.json();
-  });
+  }); 
 }
 
 export function getUserPosts({ userId, token }) {
