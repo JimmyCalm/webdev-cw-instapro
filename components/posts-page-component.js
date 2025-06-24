@@ -2,14 +2,15 @@ import { formatDistanceToNow } from "../node_modules/date-fns";
 import { ru } from "../node_modules/date-fns/locale";
 import { USER_POSTS_PAGE } from "../routes.js";
 import { renderHeaderComponent } from "./header-component.js";
-import { posts, goToPage } from "../index.js";
+import { likePost, unlikePost } from "../api.js";
+import { updatePosts } from "../index.js";
 
-export function renderPostsPageComponent({ appEl, user, posts, goToPage }) {
-  // @TODO: реализовать рендер постов из api
-  console.log("Актуальный список постов:", posts);
+export function renderPostsPageComponent({ appEl, user, posts, goToPage, updatePosts }) {
+  // @TODO: реализовать рендер постов из api(Готово)
+  //console.log("Актуальный список постов:", posts);
 
   /**
-   * @TODO: чтобы отформатировать дату создания поста в виде "19 минут назад"
+   * @TODO: чтобы отформатировать дату создания поста в виде "19 минут назад"(Готово)
    * можно использовать https://date-fns.org/v2.29.3/docs/formatDistanceToNow
    */
   const appHtml = `
@@ -18,10 +19,13 @@ export function renderPostsPageComponent({ appEl, user, posts, goToPage }) {
       <ul class="posts">
         ${posts
           .map((post) => {
-            const createdAtFormatted = formatDistanceToNow(new Date(post.createdAt), {
-              addSuffix: true,
-              locale: ru,
-            });
+            const createdAtFormatted = formatDistanceToNow(
+              new Date(post.createdAt),
+              {
+                addSuffix: true,
+                locale: ru,
+              }
+            );
 
             const isLiked = post.isLiked;
             const likeImgSrc = isLiked
@@ -76,4 +80,41 @@ export function renderPostsPageComponent({ appEl, user, posts, goToPage }) {
       });
     });
   }
+
+  for (const likeButton of document.querySelectorAll(".like-button")) {
+  likeButton.addEventListener("click", () => {
+    if (!user) {
+      alert("Чтобы ставить лайки, нужно авторизоваться");
+      return;
+    }
+
+    const postId = likeButton.dataset.postId;
+    const post = posts.find((p) => p.id === postId);
+    if (!post) return;
+
+    const token = `Bearer ${user.token}`;
+
+    const apiCall = post.isLiked
+      ? unlikePost({ postId, token })
+      : likePost({ postId, token });
+
+    apiCall
+      .then((updatedPost) => {
+        const newPost = updatedPost.post;
+
+        updatePosts(posts.map((p) => (p.id === newPost.id ? newPost : p)));
+
+        renderPostsPageComponent({
+          appEl: document.getElementById("app"),
+          user,
+          posts: posts.map((p) => (p.id === newPost.id ? newPost : p)),
+          goToPage,
+          updatePosts,
+        });
+      })
+      .catch((error) => {
+        alert(error.message);
+      });
+  });
+}
 }

@@ -9,7 +9,6 @@ import { ADD_POSTS_PAGE, AUTH_PAGE, POSTS_PAGE } from "../routes.js";
  * @returns {HTMLElement} Возвращает элемент заголовка после рендеринга.
  */
 export function renderHeaderComponent({ element, user }) {
-  console.log("renderHeaderComponent called");
   /**
    * Рендерит содержимое заголовка.
    */

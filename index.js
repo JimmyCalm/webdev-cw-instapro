@@ -32,6 +32,10 @@ export const logout = () => {
   goToPage(POSTS_PAGE);
 };
 
+export function updatePosts(newPosts) {
+  posts = newPosts;
+}
+
 /**
  * Включает страницу приложения
  */
@@ -68,7 +72,7 @@ export const goToPage = (newPage, data) => {
     }
 
     if (newPage === USER_POSTS_PAGE) {
-      // @@TODO: реализовать получение постов юзера из API
+      // @@TODO: реализовать получение постов юзера из API(Готово)
       page = LOADING_PAGE;
       renderApp();
 
@@ -161,6 +165,7 @@ const renderApp = () => {
       user,
       posts,
       goToPage,
+      updatePosts,
     });
   }
 

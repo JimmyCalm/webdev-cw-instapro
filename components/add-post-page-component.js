@@ -5,7 +5,7 @@ export function renderAddPostPageComponent({ appEl,user, onAddPostClick }) {
   let imageUrl = "";
 
   const render = () => {
-    // @TODO: Реализовать страницу добавления поста
+    // @TODO: Реализовать страницу добавления поста(Готово)
     appEl.innerHTML = `
       <div class="page-container">
         <div class="header-container"></div>
