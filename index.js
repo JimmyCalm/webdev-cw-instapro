@@ -32,6 +32,10 @@ export const logout = () => {
   goToPage(POSTS_PAGE);
 };
 
+export function updatePosts(newPosts) {
+  posts = newPosts;
+}
+
 /**
  * Включает страницу приложения
  */
@@ -68,7 +72,7 @@ export const goToPage = (newPage, data) => {
     }
 
     if (newPage === USER_POSTS_PAGE) {
-      // @@TODO: реализовать получение постов юзера из API
+      // @@TODO: реализовать получение постов юзера из API(Готово)
       page = LOADING_PAGE;
       renderApp();
 
@@ -120,6 +124,7 @@ const renderApp = () => {
   if (page === ADD_POSTS_PAGE) {
     return renderAddPostPageComponent({
       appEl,
+      user,
       onAddPostClick({ description, imageUrl }) {
         // @TODO: реализовать добавление поста в API (Готово)
         if (!description || !imageUrl) {
@@ -131,7 +136,6 @@ const renderApp = () => {
           method: "POST",
           headers: {
             Authorization: `Bearer ${user.token}`,
-            "Content-Type": "application/json",
           },
           body: JSON.stringify({
             description,
@@ -161,6 +165,7 @@ const renderApp = () => {
       user,
       posts,
       goToPage,
+      updatePosts,
     });
   }
 

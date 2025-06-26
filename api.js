@@ -86,3 +86,31 @@ export function getUserPosts({ userId, token }) {
       return data.posts;
     });
 }
+
+export function likePost({ postId, token }) {
+  return fetch(`${postsHost}/${postId}/like`, {
+    method: "POST",
+    headers: {
+      Authorization: token,
+    },
+  }).then(response => {
+    if (!response.ok) {
+      throw new Error("Не удалось поставить лайк");
+    }
+    return response.json();
+  });
+}
+
+export function unlikePost({ postId, token }) {
+  return fetch(`${postsHost}/${postId}/dislike`, {
+    method: "POST",
+    headers: {
+      Authorization: token,
+    },
+  }).then(response => {
+    if (!response.ok) {
+      throw new Error("Не удалось убрать лайк");
+    }
+    return response.json();
+  });
+}
